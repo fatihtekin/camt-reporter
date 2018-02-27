@@ -68,6 +68,32 @@
 			</TxsSummry>
             <Ntry>
                 <NtryRef>1234567890</NtryRef>
+                <Amt Ccy="EUR">500.00</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <Sts>BOOK</Sts>
+                <BookgDt>
+                    <Dt>2016-12-03</Dt>
+                </BookgDt>
+                <ValDt>
+                    <Dt>2016-12-03</Dt>
+                </ValDt>
+                <AcctSvcrRef>1234567890</AcctSvcrRef>
+            </Ntry>
+            <Ntry>
+                <NtryRef>1234567890</NtryRef>
+                <Amt Ccy="EUR">500.11</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <Sts>BOOK</Sts>
+                <BookgDt>
+                    <Dt>2016-12-03</Dt>
+                </BookgDt>
+                <ValDt>
+                    <Dt>2016-12-03</Dt>
+                </ValDt>
+                <AcctSvcrRef>1234567890</AcctSvcrRef>
+            </Ntry>
+            <Ntry>
+                <NtryRef>1234567890</NtryRef>
                 <Amt Ccy="EUR">1</Amt>
                 <CdtDbtInd>DBIT</CdtDbtInd>
                 <Sts>BOOK</Sts>
@@ -92,19 +118,6 @@
 				</ValDt>
 				<AcctSvcrRef>1234567890</AcctSvcrRef>
 			</Ntry>
-            <Ntry>
-                <NtryRef>1234567890</NtryRef>
-                <Amt Ccy="EUR">1000.11</Amt>
-                <CdtDbtInd>CRDT</CdtDbtInd>
-                <Sts>BOOK</Sts>
-                <BookgDt>
-                    <Dt>2016-12-03</Dt>
-                </BookgDt>
-                <ValDt>
-                    <Dt>2016-12-03</Dt>
-                </ValDt>
-                <AcctSvcrRef>1234567890</AcctSvcrRef>
-            </Ntry>
 		</Stmt>
 	</BkToCstmrStmt>
 </Document>

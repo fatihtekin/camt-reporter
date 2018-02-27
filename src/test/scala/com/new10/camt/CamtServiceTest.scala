@@ -12,7 +12,7 @@ class CamtServiceTest extends WordSpec
 
     "Valid list of  given" should {
       "Expect output list have the right data" in {
-        CamtReporter.reportCamt(Config("src/test/resources/valid_camt.xml", 3)) shouldEqual List(
+        CamtReporter.reportCamt(Config("src/test/resources/valid_unsorted_camt.xml", 3)) shouldEqual List(
            " 9-2016|         -100.00 EUR",
            "10-2016|         -101.00 EUR",
            "11-2016|          -99.00 EUR",
@@ -59,7 +59,7 @@ class CamtServiceTest extends WordSpec
     }
     "Valid file is given with valid commandline parameters" should {
       "Expect report is generated without exception" in {
-        CommandLineRunner.main(Array("-c", "3", "-f", "src/test/resources/valid_camt.xml"))
+        CommandLineRunner.main(Array("-c", "3", "-f", "src/test/resources/valid_unsorted_camt.xml"))
       }
     }
 
