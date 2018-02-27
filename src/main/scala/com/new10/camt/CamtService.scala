@@ -37,8 +37,6 @@ object CamtService extends LazyLogging {
     *   Second group ntrys by periods(month,year) and sort by period
     *   Third group ntrys by days and sort by day
     *   Count the days in debt for the month and  wrap the data in Report case class
-    * @param doc
-    * @return
     */
   def accumulateMonthlyFinancials(doc: Document): List[Report] = {
     validateDocument(doc)
@@ -48,7 +46,7 @@ object CamtService extends LazyLogging {
       case CRDT => balanceAtTheBeginning.Amt.value.scale2Fractions()
       case DBIT => -balanceAtTheBeginning.Amt.value.scale2Fractions()
     }
-    ListMap((stmt.Ntry ++ getCompletingDays(stmt))
+    ListMap((stmt.Ntry ++ getDaysFromStartToEnd(stmt))
       .groupBy(ntry => Period(ntry.ValDt.Dt.getMonth, ntry.ValDt.Dt.getYear)).toSeq.sortBy { case (p, _) => (p.year, p.month) }: _*)
       .map { case (period, mothlyNtrys) =>
         var inDebtDays = 0
@@ -62,10 +60,9 @@ object CamtService extends LazyLogging {
   }
 
   /**
-    * Prepares 0 balance ntrys records for all the days so that we wont miss the days to report
-    * I found this logic easier to maintain as it quite straight forward to generate the total days
+    * Prepares all the days so that we wont miss the days to report
     */
-  private def getCompletingDays(stmt: Stmt): Seq[Ntry] = {
+  private def getDaysFromStartToEnd(stmt: Stmt): Seq[Ntry] = {
     val factory = DatatypeFactory.newInstance()
     Iterator.iterate(new DateTime(stmt.FrToDt.FrDtTm.toGregorianCalendar.getTime)) {_.plusDays(1)}
       .takeWhile(_.isBefore(new DateTime(stmt.FrToDt.ToDtTm.toGregorianCalendar.getTime).plusDays(1)))
@@ -103,14 +100,13 @@ object CamtService extends LazyLogging {
         throw new IllegalArgumentException("/Document/BkToCstmrStmt/Stmt/Bal has missing fields")
       }
     )
-    if (stmt.Bal.length != 2) {
+    if (stmt.Bal.lengthCompare(2) != 0) {
       throw new IllegalArgumentException("/Document/BkToCstmrStmt/Stmt/Bal must have only 2 entry as beginning and end")
     }
   }
 
   /**
     * Validate ntry
-    * @param ntrys
     */
   private def validateNtrys(ntrys: Seq[Ntry]): Unit = {
     ntrys.foreach(ntry =>
